@@ -35,15 +35,12 @@ namespace Testes
             //Ordenando o elemento selecionado (no caso é um atributo)
             // IOrderedEnumerable<Cliente> clientesOrdenados = clientes.OrderBy(cliente => cliente.Nome);
 
-            IOrderedEnumerable<Cliente> clientesOrdenados = 
-                clientes.OrderBy(cliente => {
-                    if(cliente == null)
-                    {
-                        // comando para os clientes null ficarem no final, se quiser que fique no início é só usar MinValue
-                        return int.MaxValue;
-                    }
-                    return cliente.Idade;
-                });
+            //var clientesNaoNulos = clientes.Where(cliente => cliente != null);
+            
+            //Tratando para não ter execões por causa de elementos null
+                var clientesOrdenados =
+                clientes.Where(cliente => cliente !=null)
+                .OrderBy(cliente => cliente.Idade);
 
 
             foreach (var item in clientesOrdenados)
