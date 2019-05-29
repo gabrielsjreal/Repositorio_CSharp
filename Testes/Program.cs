@@ -20,23 +20,42 @@ namespace Testes
 
             var cliente1 = new Cliente("Gabriel", 23, 2222);
             clientes.Add(cliente1);
+            clientes.Add(null);
             var cliente2 = new Cliente("João", 22, 5555);
             clientes.Add(cliente2);
             var cliente3 = new Cliente("Lucas", 21, 4444);
             clientes.Add(cliente3);
+            clientes.Add(null);
             var cliente4 = new Cliente("Pedro", 20, 1111);
             clientes.Add(cliente4);
 
             // código para ordenar -- Criei uma classe específica para isso.
             clientes.Sort(new ComparadorClientePorCpf());
 
-            IOrderedEnumerable<Cliente> listaOrdenada =
-                clientes.OrderBy(cliente => cliente.Nome);
+            //Ordenando o elemento selecionado (no caso é um atributo)
+            // IOrderedEnumerable<Cliente> clientesOrdenados = clientes.OrderBy(cliente => cliente.Nome);
+
+            IOrderedEnumerable<Cliente> clientesOrdenados = 
+                clientes.OrderBy(cliente => {
+                    if(cliente == null)
+                    {
+                        // comando para os clientes null ficarem no final, se quiser que fique no início é só usar MinValue
+                        return int.MaxValue;
+                    }
+                    return cliente.Idade;
+                });
 
 
-            foreach (var item in listaOrdenada)
+            foreach (var item in clientesOrdenados)
             {
-                Console.WriteLine(item);
+                //condição para validar se uma conta é null ou não
+                // Se quiser usar apenas as contão que não são null, é só usar 1 if com 'item != null
+                if (item != null)
+                {
+                    Console.WriteLine(item);
+                }
+                
+
             }
 
             // foreach para a lista do tipo List<>
