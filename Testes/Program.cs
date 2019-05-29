@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Testes.Entities;
 using Testes.Entities.Comparadores;
 
@@ -29,11 +30,22 @@ namespace Testes
             // código para ordenar -- Criei uma classe específica para isso.
             clientes.Sort(new ComparadorClientePorCpf());
 
-            foreach (var item in clientes)
+            IOrderedEnumerable<Cliente> listaOrdenada =
+                clientes.OrderBy(cliente => cliente.Nome);
+
+
+            foreach (var item in listaOrdenada)
             {
                 Console.WriteLine(item);
             }
 
+            // foreach para a lista do tipo List<>
+            /*
+            foreach (var item in clientes)
+            {
+                Console.WriteLine(item);
+            }
+            */
         }
     }
 }
